@@ -1192,7 +1192,7 @@ async fn take_screenshot(app: AppHandle, _state: MutableState<'_, App>) -> Resul
         .app_data_dir()
         .unwrap()
         .join("screenshots")
-        .join(format!("{id}.cap"));
+        .join(format!("{id}.phia"));
 
     std::fs::create_dir_all(&recording_dir).map_err(|e| e.to_string())?;
 
@@ -1321,7 +1321,7 @@ async fn save_file_dialog(
     println!("save_file_dialog called with file_name: {file_name}, file_type: {file_type}");
 
     let file_name = file_name
-        .strip_suffix(".cap")
+        .strip_suffix(".phia")
         .unwrap_or(&file_name)
         .to_string();
     println!("File name after removing .cap suffix: {file_name}");
@@ -1966,7 +1966,7 @@ pub async fn run(recording_logging_handle: LoggingHandle) {
             // This is also handled as a deeplink on some platforms (eg macOS), see deeplink_actions
             let Some(cap_file) = args
                 .iter()
-                .find(|arg| arg.ends_with(".cap"))
+                .find(|arg| arg.ends_with(".phia"))
                 .map(PathBuf::from)
             else {
                 let app = app.clone();

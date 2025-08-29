@@ -96,7 +96,7 @@ export function Header() {
 
 				<div class="flex flex-row items-center">
 					<NameEditor name={meta().prettyName} />
-					<span class="text-sm text-gray-11">.cap</span>
+					<span class="text-sm text-gray-11">.phia</span>
 				</div>
 				<div data-tauri-drag-region class="flex-1 h-full" />
 				<EditorButton

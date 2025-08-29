@@ -224,7 +224,7 @@ pub async fn start_recording(
         .app_data_dir()
         .unwrap()
         .join("recordings")
-        .join(format!("{id}.cap"));
+        .join(format!("{id}.phia"));
 
     ensure_dir(&recording_dir).map_err(|e| format!("Failed to create recording directory: {e}"))?;
     state_mtx

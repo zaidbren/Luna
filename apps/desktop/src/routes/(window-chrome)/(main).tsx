@@ -579,8 +579,8 @@ function createUpdateCheck() {
 		if (!update) return;
 
 		const shouldUpdate = await dialog.confirm(
-			`Version ${update.version} of Cap is available, would you like to install it?`,
-			{ title: "Update Cap", okLabel: "Update", cancelLabel: "Ignore" },
+			`Version ${update.version} of Phia is available, would you like to install it?`,
+			{ title: "Update Phia", okLabel: "Update", cancelLabel: "Ignore" },
 		);
 
 		if (!shouldUpdate) return;

@@ -56,7 +56,7 @@ impl RecordStart {
         let id = Uuid::new_v4().to_string();
         let path = self
             .path
-            .unwrap_or_else(|| current_dir().unwrap().join(format!("{id}.cap")));
+            .unwrap_or_else(|| current_dir().unwrap().join(format!("{id}.phia")));
 
         let actor = cap_recording::spawn_studio_recording_actor(
             id,

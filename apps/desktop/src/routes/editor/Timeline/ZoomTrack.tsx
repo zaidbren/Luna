@@ -315,12 +315,12 @@ export function ZoomTrack(props: {
 						<SegmentRoot
 							class={cx(
 								"border duration-200 hover:border-gray-12 transition-colors group",
-								"bg-gradient-to-r from-[#292929] via-[#434343] to-[#292929] shadow-[inset_0_8px_12px_3px_rgba(255,255,255,0.2)]",
+								"bg-gradient-to-r from-[#D0A185] via-[#937360] to-[#D0A185] shadow-[inset_0_8px_12px_3px_rgba(255,255,255,0.2)]",
 								isSelected()
 									? "wobble-wrapper border-gray-12"
 									: "border-transparent",
 							)}
-							innerClass="ring-red-5"
+							innerClass="ring-[#937360]"
 							segment={segment}
 							onMouseEnter={() => {
 								setHoveringSegment(true);
