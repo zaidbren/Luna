@@ -80,11 +80,11 @@ export const EXPORT_TO_OPTIONS = [
 		value: "clipboard",
 		icon: <IconCapCopy class="text-gray-12 size-3.5" />,
 	},
-	{
-		label: "Shareable link",
-		value: "link",
-		icon: <IconCapLink class="text-gray-12 size-3.5" />,
-	},
+	// {
+	// 	label: "Shareable link",
+	// 	value: "link",
+	// 	icon: <IconCapLink class="text-gray-12 size-3.5" />,
+	// },
 ] as const;
 
 type ExportFormat = ExportSettings["format"];
@@ -382,27 +382,22 @@ export function ExportDialog() {
 		<>
 			<Show when={exportState.type === "idle"}>
 				<DialogContent
-					title="Export Cap"
+					title="Export Phia"
 					confirm={
-						settings.exportTo === "link" && !auth.data ? (
-							<SignInButton>
-								{exportButtonIcon[settings.exportTo]}
-								<span class="ml-1.5">Sign in to share</span>
-							</SignInButton>
-						) : (
+						
 							<Button
 								class="flex gap-1.5 items-center"
 								variant="dark"
 								onClick={() => {
 									if (settings.exportTo === "file") save.mutate();
-									else if (settings.exportTo === "link") upload.mutate();
+									// else if (settings.exportTo === "link") upload.mutate();
 									else copy.mutate();
 								}}
 							>
 								Export to
 								{exportButtonIcon[settings.exportTo]}
 							</Button>
-						)
+					
 					}
 					leftFooterContent={
 						<div>

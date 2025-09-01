@@ -2097,6 +2097,9 @@ pub async fn run(recording_logging_handle: LoggingHandle) {
             tokio::spawn({
                 let app = app.clone();
                 async move {
+                    // TEMPORARY: For testing purposes, always show setup window
+                    // Original logic (commented out for easy restoration):
+                    
                     if !permissions.screen_recording.permitted()
                         || !permissions.accessibility.permitted()
                         || GeneralSettingsStore::get(&app)
@@ -2111,6 +2114,11 @@ pub async fn run(recording_logging_handle: LoggingHandle) {
 
                         let _ = ShowCapWindow::Main.show(&app).await;
                     }
+
+                    
+                    // Force setup window for testing
+                    // println!("TEST MODE: Always showing setup window");
+                    // let _ = ShowCapWindow::Setup.show(&app).await;
                 }
             });
 

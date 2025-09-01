@@ -1,6 +1,5 @@
 import Tooltip from "@corvu/tooltip";
 import {
-	createMutation,
 	createQuery,
 	queryOptions,
 	useQueryClient,
@@ -13,9 +12,8 @@ import * as shell from "@tauri-apps/plugin-shell";
 import { cx } from "cva";
 import {
 	createMemo,
-	createSignal,
 	For,
-	type JSX,
+	createSignal,
 	type ParentProps,
 	Show,
 } from "solid-js";
@@ -31,22 +29,6 @@ type Recording = {
 	thumbnailPath: string;
 };
 
-const Tabs = [
-	{
-		id: "all",
-		label: "Show all",
-	},
-	{
-		id: "instant",
-		icon: <IconCapInstant class="invert size-3 dark:invert-0" />,
-		label: "Instant",
-	},
-	{
-		id: "studio",
-		icon: <IconCapFilmCut class="invert size-3 dark:invert-0" />,
-		label: "Studio",
-	},
-] satisfies { id: string; label: string; icon?: JSX.Element }[];
 
 const recordingsQuery = queryOptions({
 	queryKey: ["recordings"],
@@ -71,9 +53,6 @@ const recordingsQuery = queryOptions({
 });
 
 export default function Recordings() {
-	const [activeTab, setActiveTab] = createSignal<(typeof Tabs)[number]["id"]>(
-		Tabs[0].id,
-	);
 	const recordings = createQuery(() => recordingsQuery);
 
 	createTauriEventListener(events.recordingDeleted, () => recordings.refetch());
@@ -82,12 +61,7 @@ export default function Recordings() {
 		if (!recordings.data) {
 			return [];
 		}
-		if (activeTab() === "all") {
-			return recordings.data;
-		}
-		return recordings.data.filter(
-			(recording) => recording.meta.mode === activeTab(),
-		);
+		return recordings.data.filter((recording) => recording.meta.mode === "studio");
 	});
 
 	const handleRecordingClick = (recording: Recording) => {
@@ -128,24 +102,7 @@ export default function Recordings() {
 					</p>
 				}
 			>
-				<div class="flex gap-3 items-center pb-4 w-full border-b border-gray-2">
-					<For each={Tabs}>
-						{(tab) => (
-							<div
-								class={cx(
-									"flex gap-1.5 items-center transition-colors duration-200 p-2 px-3 border rounded-full",
-									activeTab() === tab.id
-										? "bg-gray-5 cursor-default border-gray-5"
-										: "bg-transparent cursor-pointer hover:bg-gray-3 border-gray-5",
-								)}
-								onClick={() => setActiveTab(tab.id)}
-							>
-								{tab.icon && tab.icon}
-								<p class="text-xs text-gray-12">{tab.label}</p>
-							</div>
-						)}
-					</For>
-				</div>
+				{/* Recording mode tabs removed; showing studio recordings only */}
 
 				<div class="flex flex-col flex-1 mt-4 rounded-xl border custom-scroll bg-gray-2 border-gray-3">
 					<ul class="p-4 flex flex-col gap-5 w-full text-[--text-primary]">
@@ -177,9 +134,6 @@ function RecordingItem(props: {
 	onCopyVideoToClipboard: () => void;
 }) {
 	const [imageExists, setImageExists] = createSignal(true);
-	const mode = () => props.recording.meta.mode;
-	const firstLetterUpperCase = () =>
-		mode().charAt(0).toUpperCase() + mode().slice(1);
 
 	const queryClient = useQueryClient();
 
@@ -201,77 +155,25 @@ function RecordingItem(props: {
 				</Show>
 				<div class="flex flex-col gap-2">
 					<span>{props.recording.prettyName}</span>
-					<div
-						class={cx(
-							"px-2 py-0.5 flex items-center gap-1.5 font-medium text-[11px] text-gray-12 rounded-full w-fit",
-							mode() === "instant" ? "bg-blue-100" : "bg-gray-3",
-						)}
-					>
-						{mode() === "instant" ? (
-							<IconCapInstant class="invert size-2.5 dark:invert-0" />
-						) : (
-							<IconCapFilmCut class="invert size-2.5 dark:invert-0" />
-						)}
-						<p>{firstLetterUpperCase()}</p>
-					</div>
 				</div>
 			</div>
 			<div class="flex gap-2 items-center">
-				<Show when={mode() === "studio"}>
-					<Show when={props.recording.meta.sharing}>
-						{(sharing) => (
-							<TooltipIconButton
-								tooltipText="Open link"
-								onClick={() => shell.open(sharing().link)}
-							>
-								<IconCapLink class="size-4" />
-							</TooltipIconButton>
-						)}
-					</Show>
-					<TooltipIconButton
-						tooltipText="Edit"
-						onClick={() => props.onOpenEditor()}
-					>
-						<IconLucideEdit class="size-4" />
-					</TooltipIconButton>
+				<Show when={props.recording.meta.sharing}>
+					{(sharing) => (
+						<TooltipIconButton
+							tooltipText="Open link"
+							onClick={() => shell.open(sharing().link)}
+						>
+							<IconCapLink class="size-4" />
+						</TooltipIconButton>
+					)}
 				</Show>
-				<Show when={mode() === "instant"}>
-					{(_) => {
-						const reupload = createMutation(() => ({
-							mutationFn: () => {
-								return commands.uploadExportedVideo(
-									props.recording.path,
-									"Reupload",
-								);
-							},
-						}));
-
-						return (
-							<Show when={props.recording.meta.sharing}>
-								{(sharing) => (
-									<>
-										<TooltipIconButton
-											tooltipText="Reupload"
-											onClick={() => reupload.mutate()}
-										>
-											{reupload.isPending ? (
-												<IconLucideLoaderCircle class="animate-spin" />
-											) : (
-												<IconLucideRotateCcw class="size-4" />
-											)}
-										</TooltipIconButton>
-										<TooltipIconButton
-											tooltipText="Open link"
-											onClick={() => shell.open(sharing().link)}
-										>
-											<IconCapLink class="size-4" />
-										</TooltipIconButton>
-									</>
-								)}
-							</Show>
-						);
-					}}
-				</Show>
+				<TooltipIconButton
+					tooltipText="Edit"
+					onClick={() => props.onOpenEditor()}
+				>
+					<IconLucideEdit class="size-4" />
+				</TooltipIconButton>
 				<TooltipIconButton
 					tooltipText="Open recording bundle"
 					onClick={() => revealItemInDir(`${props.recording.path}/`)}

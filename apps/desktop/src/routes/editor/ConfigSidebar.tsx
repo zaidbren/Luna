@@ -200,9 +200,9 @@ const CAMERA_SHAPES = [
 const BACKGROUND_THEMES = {
 	macOS: "macOS",
 	dark: "Dark",
-	blue: "Blue",
-	purple: "Purple",
-	orange: "Orange",
+	// blue: "Blue",
+	// purple: "Purple",
+	// orange: "Orange",
 };
 
 const TAB_IDS = {

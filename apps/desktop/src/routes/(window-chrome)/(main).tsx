@@ -292,7 +292,7 @@ function Page() {
 						</button>
 					</Tooltip>
 
-					<ChangelogButton />
+					{/* <ChangelogButton />
 
 					<Show when={!license.isLoading && license.data?.type === "personal"}>
 						<button
@@ -318,7 +318,7 @@ function Page() {
 						>
 							<IconLucideBug class="text-gray-11 size-5 hover:text-gray-12" />
 						</button>
-					)}
+					)} */}
 				</div>
 			</WindowChromeHeader>
 			<div class="flex items-center justify-between pb-[0.25rem]">
@@ -335,7 +335,7 @@ function Page() {
 						<IconCapLogoFullDark class="hidden dark:block" />
 						<IconCapLogoFull class="block dark:hidden" />
 					</a>
-					<ErrorBoundary fallback={<></>}>
+					{/* <ErrorBoundary fallback={<></>}>
 						<Suspense>
 							<span
 								onClick={async () => {
@@ -357,9 +357,9 @@ function Page() {
 										: "Personal"}
 							</span>
 						</Suspense>
-					</ErrorBoundary>
+					</ErrorBoundary> */}
 				</div>
-				<Mode />
+				{/* <Mode /> */}
 			</div>
 			<div>
 				<AreaSelectButton
@@ -486,36 +486,27 @@ function Page() {
 						Instant Mode
 					</SignInButton>
 				) : (
-					<Button
-						disabled={toggleRecording.isPending}
-						variant="blue"
-						size="md"
-						onClick={() => toggleRecording.mutate()}
-						class="flex flex-grow justify-center items-center"
-					>
-						{isRecording() ? (
-							"Stop Recording"
-						) : (
-							<>
-								{rawOptions.mode === "instant" ? (
-									<IconCapInstant
-										class={cx(
-											"size-[0.8rem] mr-1.5",
-											toggleRecording.isPending ? "opacity-50" : "opacity-100",
-										)}
-									/>
-								) : (
-									<IconCapFilmCut
-										class={cx(
-											"size-[0.8rem] mr-2 -mt-[1.5px]",
-											toggleRecording.isPending ? "opacity-50" : "opacity-100",
-										)}
-									/>
-								)}
-								Start Recording
-							</>
-						)}
-					</Button>
+					<div class="relative rounded-full flex-grow">
+						{/* Blur ball background */}
+						{/* <div 
+							class="absolute left-0 top-0 flex h-full w-full rounded-full opacity-90 blur-[8px] scale-110"
+							style="background: linear-gradient(360deg, rgb(199, 154, 133) 0%, rgb(255, 225, 193) 100%); transform: scale(1.1) translateZ(0px);"
+						/> */}
+						{/* Main button */}
+						<button
+							disabled={toggleRecording.isPending}
+							onClick={() => toggleRecording.mutate()}
+							class="relative flex items-center justify-center rounded-full font-medium bg-gray-12 dark:bg-gray-12 text-gray-1 dark:text-gray-1 transition-all duration-150 h-10 min-w-[78px] text-[10px] leading-4 px-4 w-full"
+						>
+							{isRecording() ? (
+								"Stop Recording"
+							) : (
+								<>
+									Start Recording
+								</>
+							)}
+						</button>
+					</div>
 				)}
 			</div>
 		</div>

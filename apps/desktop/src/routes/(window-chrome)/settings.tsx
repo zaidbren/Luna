@@ -41,31 +41,31 @@ export default function Settings(props: RouteSectionProps) {
 								name: "Previous Recordings",
 								icon: IconLucideSquarePlay,
 							},
-							{
-								href: "integrations",
-								name: "Integrations",
-								icon: IconLucideUnplug,
-							},
-							{
-								href: "license",
-								name: "License",
-								icon: IconLucideGift,
-							},
+							// {
+							// 	href: "integrations",
+							// 	name: "Integrations",
+							// 	icon: IconLucideUnplug,
+							// },
+							// {
+							// 	href: "license",
+							// 	name: "License",
+							// 	icon: IconLucideGift,
+							// },
 							{
 								href: "experimental",
 								name: "Experimental",
 								icon: IconCapSettings,
 							},
-							{
-								href: "feedback",
-								name: "Feedback",
-								icon: IconLucideMessageSquarePlus,
-							},
-							{
-								href: "changelog",
-								name: "Changelog",
-								icon: IconLucideBell,
-							},
+							// {
+							// 	href: "feedback",
+							// 	name: "Feedback",
+							// 	icon: IconLucideMessageSquarePlus,
+							// },
+							// {
+							// 	href: "changelog",
+							// 	name: "Changelog",
+							// 	icon: IconLucideBell,
+							// },
 						].filter(Boolean)}
 					>
 						{(item) => (
@@ -82,7 +82,7 @@ export default function Settings(props: RouteSectionProps) {
 						)}
 					</For>
 				</ul>
-				<div class="p-[0.625rem] text-left flex flex-col">
+				{/* <div class="p-[0.625rem] text-left flex flex-col">
 					<Show when={version()}>
 						{(v) => <p class="mb-2 text-xs text-gray-11">v{v()}</p>}
 					</Show>
@@ -97,7 +97,7 @@ export default function Settings(props: RouteSectionProps) {
 					) : (
 						<SignInButton>Sign In</SignInButton>
 					)}
-				</div>
+				</div> */}
 			</div>
 			<div class="overflow-y-hidden flex-1 animate-in">
 				<CapErrorBoundary>

@@ -9,13 +9,13 @@ import "@total-typescript/ts-reset/filter-boolean";
 import { CheckMenuItem, Menu } from "@tauri-apps/api/menu";
 import { confirm } from "@tauri-apps/plugin-dialog";
 import { cx } from "cva";
-import { createResource, For, Show } from "solid-js";
+import { ComponentProps, createResource, For, JSX, Show } from "solid-js";
 import { createStore } from "solid-js/store";
-import themePreviewAuto from "~/assets/theme-previews/auto.jpg";
-import themePreviewDark from "~/assets/theme-previews/dark.jpg";
-import themePreviewLight from "~/assets/theme-previews/light.jpg";
 import { Input } from "~/routes/editor/ui";
 import { authStore, generalSettingsStore } from "~/store";
+import IconSun from "~icons/cap/sun.jsx";
+import IconMoon from "~icons/cap/moon.jsx";
+import IconSytemTheme from "~icons/cap/systemtheme.jsx";
 import {
 	type AppTheme,
 	commands,
@@ -40,18 +40,24 @@ function AppearanceSection(props: {
 	currentTheme: AppTheme;
 	onThemeChange: (theme: AppTheme) => void;
 }) {
+	// const options = [
+	// 	{ id: "system", name: "System", preview: 'themePreviewAuto' },
+	// 	{ id: "light", name: "Light", preview: 'themePreviewLight' },
+	// 	{ id: "dark", name: "Dark", preview: 'themePreviewDark' },
+	// ] satisfies { id: AppTheme; name: string; preview: string }[];
+
 	const options = [
-		{ id: "system", name: "System", preview: themePreviewAuto },
-		{ id: "light", name: "Light", preview: themePreviewLight },
-		{ id: "dark", name: "Dark", preview: themePreviewDark },
-	] satisfies { id: AppTheme; name: string; preview: string }[];
+		{ id: "light", name: "Light", preview: <IconSun class="size-5 text-gray-12"/> },
+		{ id: "dark", name: "Dark", preview: <IconMoon class="size-4 text-gray-12"/> },
+		{ id: "system", name: "System", preview:<IconSytemTheme class="size-4 text-gray-12"/> },
+	] satisfies { id: AppTheme; name: string; preview: any }[];
 
 	return (
 		<div class="flex flex-col gap-4">
 			<div class="flex flex-col pb-4 border-b border-gray-2">
 				<h2 class="text-lg font-medium text-gray-12">General</h2>
 				<p class="text-sm text-gray-10">
-					General settings of your Cap application.
+					General settings
 				</p>
 			</div>
 			<div
@@ -60,43 +66,33 @@ function AppearanceSection(props: {
 			>
 				<div class="flex flex-col gap-3">
 					<p class="text-sm text-gray-12">Appearance</p>
-					<div class="flex justify-between m-1 min-w-[20rem] w-[22.2rem] flex-nowrap">
+					<div style="display:flex;border-radius:21px;background-color:rgb(231 230 228);height:32px;width:88px;column-gap:0px;padding:2px;">
 						<For each={options}>
 							{(theme) => (
 								<button
 									type="button"
 									aria-checked={props.currentTheme === theme.id}
-									class="flex flex-col items-center rounded-md group focus:outline-none focus-visible:ring-gray-300 focus-visible:ring-offset-gray-50 focus-visible:ring-offset-2 focus-visible:ring-4"
+									aria-label={`Select theme: ${theme.name}`}
 									onClick={() => props.onThemeChange(theme.id)}
+									style={{
+										display: "flex",
+										"align-items": "center",
+										"justify-content": "center",
+										"border-radius": "9999px",
+										"transition-property": "color, background-color, border-color, text-decoration-color, fill, stroke",
+										"transition-timing-function": "cubic-bezier(0.4, 0, 0.2, 1)",
+										"transition-duration": "150ms",
+										"--tw-bg-opacity": "1",
+										"background-color": props.currentTheme === theme.id
+											? "rgb(255 255 255 / var(--tw-bg-opacity, 1))"
+											: "transparent",
+										"--tw-text-opacity": "1",
+										color: "rgb(13 13 13 / var(--tw-text-opacity, 1))",
+										height: "28px",
+										width: "28px",
+									}}
 								>
-									<div
-										class={cx(
-											`w-24 h-[4.8rem] rounded-md overflow-hidden focus:outline-none ring-offset-gray-50 transition-all duration-200`,
-											{
-												"ring-2 ring-gray-12 ring-offset-2":
-													props.currentTheme === theme.id,
-												"group-hover:ring-2 ring-offset-2 group-hover:ring-gray-5":
-													props.currentTheme !== theme.id,
-											},
-										)}
-										aria-label={`Select theme: ${theme.name}`}
-									>
-										<div class="flex justify-center items-center w-full h-full">
-											<img
-												draggable={false}
-												src={theme.preview}
-												alt={`Preview of ${theme.name} theme`}
-											/>
-										</div>
-									</div>
-									<span
-										class={cx(`mt-2 text-sm transition-color duration-200`, {
-											"text-gray-12": props.currentTheme === theme.id,
-											"text-gray-10": props.currentTheme !== theme.id,
-										})}
-									>
-										{theme.name}
-									</span>
+									{theme.preview}
 								</button>
 							)}
 						</For>
@@ -171,24 +167,24 @@ function Inner(props: { initialStore: GeneralSettingsStore | null }) {
 
 	// Static settings groups structure to preserve component identity
 	const settingsGroups: SettingsGroup[] = [
-		{
-			title: "Cap Pro",
-			titleStyling:
-				"bg-blue-500 py-1.5 mb-4 text-white text-xs px-2 rounded-lg",
-			items: [
-				{
-					label: "Disable automatic link opening",
-					type: "toggle",
-					description:
-						"When enabled, Cap will not automatically open links in your browser (e.g. after creating a shareable link).",
-					get value() {
-						return !!settings.disableAutoOpenLinks;
-					},
-					onChange: (value: boolean) =>
-						handleChange("disableAutoOpenLinks", value),
-				},
-			],
-		},
+		// {
+		// 	title: "Cap Pro",
+		// 	titleStyling:
+		// 		"bg-blue-500 py-1.5 mb-4 text-white text-xs px-2 rounded-lg",
+		// 	items: [
+		// 		{
+		// 			label: "Disable automatic link opening",
+		// 			type: "toggle",
+		// 			description:
+		// 				"When enabled, Cap will not automatically open links in your browser (e.g. after creating a shareable link).",
+		// 			get value() {
+		// 				return !!settings.disableAutoOpenLinks;
+		// 			},
+		// 			onChange: (value: boolean) =>
+		// 				handleChange("disableAutoOpenLinks", value),
+		// 		},
+		// 	],
+		// },
 		{
 			title: "App",
 			os: "macos",
@@ -285,8 +281,8 @@ function Inner(props: { initialStore: GeneralSettingsStore | null }) {
 						),
 				},
 				{
-					label: "Studio recording finish behaviour",
-					description: "The studio recording finish behaviour",
+					label: "Recording finish behaviour",
+					description: "The recording finish behaviour",
 					type: "select",
 					get value() {
 						return settings.postStudioRecordingBehaviour ?? "openEditor";
@@ -306,7 +302,7 @@ function Inner(props: { initialStore: GeneralSettingsStore | null }) {
 				{
 					label: "After deleting recording behaviour",
 					description:
-						"Should Cap reopen after deleting an in progress recording?",
+						"Should Phia reopen after deleting an in progress recording?",
 					type: "select",
 					get value() {
 						return settings.postDeletionBehaviour ?? "doNothing";
@@ -410,7 +406,7 @@ function Inner(props: { initialStore: GeneralSettingsStore | null }) {
 												if (item.type === "toggle") {
 													return (
 														<ToggleSetting
-															pro={group.title === "Cap Pro"}
+															pro={group.title === "Phia Pro"}
 															label={item.label}
 															description={item.description}
 															value={item.value}
@@ -488,7 +484,7 @@ function Inner(props: { initialStore: GeneralSettingsStore | null }) {
 						)}
 					</For>
 
-					<ServerURLSetting
+					{/* <ServerURLSetting
 						value={settings.serverUrl ?? "https://cap.so"}
 						onChange={async (v) => {
 							const url = new URL(v);
@@ -505,7 +501,7 @@ function Inner(props: { initialStore: GeneralSettingsStore | null }) {
 							await commands.setServerUrl(origin);
 							handleChange("serverUrl", origin);
 						}}
-					/>
+					/> */}
 				</div>
 			</div>
 		</div>

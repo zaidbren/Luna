@@ -283,7 +283,7 @@ export function SceneTrack(props: {
 						<SegmentRoot
 							class={cx(
 								"border transition-colors duration-200 hover:border-gray-12 group",
-								`bg-gradient-to-r from-[#5C1BC4] via-[#975CFA] to-[#5C1BC4] shadow-[inset_0_8px_12px_3px_rgba(255,255,255,0.2)]`,
+								`bg-gradient-to-r from-[#A05F58] via-[#A05F58] to-[#A05F58] shadow-[inset_0_8px_12px_3px_rgba(255,255,255,0.2)]`,
 								isSelected()
 									? "wobble-wrapper border-gray-12"
 									: "border-transparent",
@@ -467,7 +467,7 @@ export function SceneTrack(props: {
 							end: time() + maxAvailableDuration(),
 						}}
 					>
-						<SegmentContent class="bg-gradient-to-r hover:border duration-200 hover:border-gray-500 from-[#5C1BC4] via-[#975CFA] to-[#5C1BC4] transition-colors group shadow-[inset_0_8px_12px_3px_rgba(255,255,255,0.2)]">
+						<SegmentContent class="bg-gradient-to-r hover:border duration-200 hover:border-gray-500 from-[#A05F58] via-[#A05F58] to-[#A05F58] transition-colors group shadow-[inset_0_8px_12px_3px_rgba(255,255,255,0.2)]">
 							<p class="w-full text-center text-gray-1 dark:text-gray-12 text-md text-primary">
 								+
 							</p>
