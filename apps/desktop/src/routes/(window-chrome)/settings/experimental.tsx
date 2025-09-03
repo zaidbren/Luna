@@ -56,8 +56,8 @@ function Inner(props: { initialStore: GeneralSettingsStore | null }) {
 						<h3 class="text-sm text-gray-12 w-fit">Recording Features</h3>
 						<div class="px-3 rounded-xl border divide-y divide-gray-3 border-gray-3 bg-gray-2">
 							<ToggleSetting
-								label="Custom cursor capture in Studio Mode"
-								description="Studio Mode recordings will capture cursor state separately for customisation (size, smoothing) in the editor. Currently experimental as cursor events may not be captured accurately."
+								label="Custom cursor capture"
+								description="Phia will capture cursor state separately for customisation (size, smoothing) in the editor. Currently experimental as cursor events may not be captured accurately."
 								value={!!settings.custom_cursor_capture2}
 								onChange={(value) =>
 									handleChange("custom_cursor_capture2", value)
@@ -84,7 +84,7 @@ function Inner(props: { initialStore: GeneralSettingsStore | null }) {
 									);
 								}}
 							/>
-							<ToggleSetting
+							{/* <ToggleSetting
 								label="New recording flow"
 								description="New and improved flow for starting a recording! You may need to restart the app for this to take effect."
 								value={!!settings.enableNewRecordingFlow}
@@ -96,7 +96,7 @@ function Inner(props: { initialStore: GeneralSettingsStore | null }) {
 										5,
 									);
 								}}
-							/>
+							/> */}
 						</div>
 					</div>
 				</div>

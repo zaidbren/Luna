@@ -1,7 +1,7 @@
 [package]
-name = "cap-desktop"
+name = "phia-desktop"
 version = "0.3.67"
-description = "Beautiful screen recordings, owned by you."
+description = "Creating beautiful screen recordings"
 authors = ["you"]
 edition = "2024"
 
