@@ -10,7 +10,7 @@ on:
         type: string
 
 env:
-  CN_APPLICATION: cap/cap
+  CN_APPLICATION: phia/phia-desktop
   APP_CARGO_TOML: apps/desktop/src-tauri/Cargo.toml
   SENTRY_ORG: cap-s2
   SENTRY_PROJECT: cap-desktop
