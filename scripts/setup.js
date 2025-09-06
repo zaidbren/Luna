@@ -22,6 +22,8 @@ const arch =
 
 const BASE_CARGO_TOML = `[env]
 FFMPEG_DIR = { relative = true, force = true, value = "target/native-deps" }
+PKG_CONFIG_PATH = { relative = true, force = true, value = "target/native-deps/lib/pkgconfig" }
+LIBRARY_PATH = { relative = true, force = true, value = "target/native-deps/lib" }
 `;
 
 async function main() {
@@ -89,6 +91,17 @@ async function main() {
 			);
 		}
 		console.log("Copied ffmpeg dylibs to target/debug");
+		
+		// Also copy for the specific target architecture
+		const targetSpecificDir = path.join(targetDir, `${arch}-apple-darwin/debug`);
+		await fs.mkdir(targetSpecificDir, { recursive: true });
+		for (const name of await fs.readdir(path.join(nativeDepsDir, "lib"))) {
+			await fs.copyFile(
+				path.join(nativeDepsDir, "lib", name),
+				path.join(targetSpecificDir, name),
+			);
+		}
+		console.log(`Copied ffmpeg dylibs to target/${arch}-apple-darwin/debug`);
 	} else if (process.platform === "win32") {
 		const FFMPEG_VERSION = "7.1";
 		const FFMPEG_ZIP_NAME = `ffmpeg-${FFMPEG_VERSION}-full_build-shared`;
@@ -161,6 +174,29 @@ async function main() {
 			"\\",
 			"/",
 		)}"\n`;
+	}
+
+	// Add target-specific linker configuration for macOS cross-compilation
+	if (process.platform === "darwin") {
+		cargoConfigContents += `
+[target.x86_64-apple-darwin]
+rustflags = [
+  "-L", "target/native-deps/lib",
+  "-L", "target/x86_64-apple-darwin/debug",
+  "-l", "framework=VideoToolbox",
+  "-l", "framework=CoreMedia",
+  "-l", "framework=CoreFoundation"
+]
+
+[target.aarch64-apple-darwin]
+rustflags = [
+  "-L", "target/native-deps/lib",
+  "-L", "target/aarch64-apple-darwin/debug",
+  "-l", "framework=VideoToolbox", 
+  "-l", "framework=CoreMedia",
+  "-l", "framework=CoreFoundation"
+]
+`;
 	}
 
 	await fs.mkdir(path.join(__root, ".cargo"), { recursive: true });

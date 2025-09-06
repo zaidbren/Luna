@@ -188,10 +188,13 @@ jobs:
           echo "NEXT_PUBLIC_CAP_AWS_REGION=${{ secrets.NEXT_PUBLIC_CAP_AWS_REGION }}" >> .env
           echo "NEXT_PUBLIC_CAP_AWS_BUCKET=${{ secrets.NEXT_PUBLIC_CAP_AWS_BUCKET }}" >> .env
           echo 'TAURI_ENV_TARGET_TRIPLE=${{ matrix.settings.target }}' >> .env
+          echo 'RUST_TARGET_TRIPLE=${{ matrix.settings.target }}' >> .env
 
       - name: Build app
         working-directory: apps/desktop
         run: |
+          export RUST_TARGET_TRIPLE=${{ matrix.settings.target }}
+          export CARGO_BUILD_TARGET=${{ matrix.settings.target }}
           pnpm -w cap-setup
           pnpm build:tauri --target ${{ matrix.settings.target }} --config src-tauri/tauri.prod.conf.json
         env:
