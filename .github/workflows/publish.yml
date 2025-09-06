@@ -187,7 +187,7 @@ jobs:
           echo 'VITE_SERVER_URL=${{ secrets.NEXT_PUBLIC_WEB_URL }}' >> .env
           echo "NEXT_PUBLIC_CAP_AWS_REGION=${{ secrets.NEXT_PUBLIC_CAP_AWS_REGION }}" >> .env
           echo "NEXT_PUBLIC_CAP_AWS_BUCKET=${{ secrets.NEXT_PUBLIC_CAP_AWS_BUCKET }}" >> .env
-          echo 'RUST_TARGET_TRIPLE=${{ matrix.settings.target }}' >> .env
+          echo 'TAURI_ENV_TARGET_TRIPLE=${{ matrix.settings.target }}' >> .env
 
       - name: Build app
         working-directory: apps/desktop
