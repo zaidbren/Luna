@@ -205,7 +205,7 @@ function Inner(props: { initialStore: GeneralSettingsStore | null }) {
 					type: "toggle",
 					os: "macos",
 					description:
-						"Show system notifications for events like copying to clipboard, saving files, and more. You may need to manually allow Cap access via your system's notification settings.",
+						"Show system notifications for events like copying to clipboard, saving files, and more. You may need to manually allow Phia access via your system's notification settings.",
 					get value() {
 						return !!settings.enableNotifications;
 					},
