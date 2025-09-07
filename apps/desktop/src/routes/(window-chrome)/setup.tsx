@@ -90,10 +90,15 @@ export default function () {
 		setOptions({ mode });
 	};
 
-	const handleContinue = () => {
-
-		handleStudioMode('studio')
-		// Just proceed to the main window without saving mode to store
+	const handleContinue = async () => {
+		handleStudioMode('studio');
+		
+		// Mark startup as completed
+		await generalSettingsStore.set({
+			hasCompletedStartup: true,
+		});
+		
+		// Proceed to the main window
 		commands.showWindow("Main").then(() => {
 			getCurrentWindow().close();
 		});
@@ -164,7 +169,7 @@ export default function () {
 							permissions.find((p) => !isPermitted(check()?.[p.key])) !==
 							undefined
 						}
-						onClick={() => handleContinue}
+						onClick={handleContinue}
 					>
 						Continue
 					</Button>

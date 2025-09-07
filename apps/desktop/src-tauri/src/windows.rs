@@ -116,16 +116,16 @@ impl CapWindowId {
 
     pub fn title(&self) -> String {
         match self {
-            Self::Setup => "Cap Setup".to_string(),
-            Self::Settings => "Cap Settings".to_string(),
-            Self::WindowCaptureOccluder { .. } => "Cap Window Capture Occluder".to_string(),
-            Self::CaptureArea => "Cap Capture Area".to_string(),
-            Self::InProgressRecording => "Cap In Progress Recording".to_string(),
-            Self::Editor { .. } => "Cap Editor".to_string(),
-            Self::ModeSelect => "Cap Mode Selection".to_string(),
-            Self::Camera => "Cap Camera".to_string(),
-            Self::RecordingsOverlay => "Cap Recordings Overlay".to_string(),
-            _ => "Cap".to_string(),
+            Self::Setup => "Phia Setup".to_string(),
+            Self::Settings => "Phia Settings".to_string(),
+            Self::WindowCaptureOccluder { .. } => "Phia Window Capture Occluder".to_string(),
+            Self::CaptureArea => "Phia Capture Area".to_string(),
+            Self::InProgressRecording => "Phia In Progress Recording".to_string(),
+            Self::Editor { .. } => "Phia Editor".to_string(),
+            Self::ModeSelect => "Phia Mode Selection".to_string(),
+            Self::Camera => "Phia Camera".to_string(),
+            Self::RecordingsOverlay => "Phia Recordings Overlay".to_string(),
+            _ => "Phia".to_string(),
         }
     }
 

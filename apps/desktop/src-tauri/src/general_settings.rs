@@ -60,7 +60,7 @@ pub struct GeneralSettingsStore {
     #[serde(default)]
     pub disable_auto_open_links: bool,
     // first launch: store won't exist so show startup
-    #[serde(default = "true_b")]
+    #[serde(default)]
     pub has_completed_startup: bool,
     #[serde(default)]
     pub theme: AppTheme,

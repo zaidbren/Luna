@@ -2106,7 +2106,7 @@ pub async fn run(recording_logging_handle: LoggingHandle) {
                             .ok()
                             .flatten()
                             .map(|s| !s.has_completed_startup)
-                            .unwrap_or(false)
+                            .unwrap_or(true)
                     {
                         let _ = ShowCapWindow::Setup.show(&app).await;
                     } else {

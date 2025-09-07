@@ -1,8 +1,8 @@
 {
 	"$schema": "https://schema.tauri.app/config/2",
 	"productName": "Phia - Development",
-	"identifier": "so.cap.desktop.dev",
-	"mainBinaryName": "Cap - Development",
+	"identifier": "so.phia.desktop.dev",
+	"mainBinaryName": "Phia - Development",
 	"build": {
 		"beforeDevCommand": "pnpm localdev",
 		"devUrl": "http://localhost:3001",
@@ -55,7 +55,6 @@
 		},
 		"macOS": {
 			"dmg": {
-				"background": "assets/dmg-background.png",
 				"appPosition": {
 					"x": 180,
 					"y": 140
