@@ -192,6 +192,7 @@ jobs:
 
       - name: Build app
         working-directory: apps/desktop
+        shell: bash
         run: |
           if [ "$RUNNER_OS" = "Windows" ]; then
             echo "RUST_TARGET_TRIPLE=${{ matrix.settings.target }}" >> $env:GITHUB_ENV
