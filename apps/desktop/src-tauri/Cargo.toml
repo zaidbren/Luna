@@ -1,6 +1,6 @@
 [package]
 name = "phia-desktop"
-version = "0.4.5"
+version = "0.4.6"
 description = "Creating beautiful screen recordings"
 authors = ["you"]
 edition = "2024"

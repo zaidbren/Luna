@@ -193,8 +193,13 @@ jobs:
       - name: Build app
         working-directory: apps/desktop
         run: |
-          export RUST_TARGET_TRIPLE=${{ matrix.settings.target }}
-          export CARGO_BUILD_TARGET=${{ matrix.settings.target }}
+          if [ "$RUNNER_OS" = "Windows" ]; then
+            echo "RUST_TARGET_TRIPLE=${{ matrix.settings.target }}" >> $env:GITHUB_ENV
+            echo "CARGO_BUILD_TARGET=${{ matrix.settings.target }}" >> $env:GITHUB_ENV
+          else
+            export RUST_TARGET_TRIPLE=${{ matrix.settings.target }}
+            export CARGO_BUILD_TARGET=${{ matrix.settings.target }}
+          fi
           pnpm -w cap-setup
           pnpm build:tauri --target ${{ matrix.settings.target }} --config src-tauri/tauri.prod.conf.json
         env:
