@@ -196,6 +196,10 @@ jobs:
           pnpm tauri build --debug --target ${{ matrix.settings.target }} --no-bundle
         env:
           RUST_TARGET_TRIPLE: ${{ matrix.settings.target }}
+          # Memory optimization flags for Windows builds only
+          CARGO_BUILD_JOBS: ${{ matrix.settings.target == 'x86_64-pc-windows-msvc' && '1' || '4' }}
+          RUSTFLAGS: ${{ matrix.settings.target == 'x86_64-pc-windows-msvc' && '-C opt-level=1 -C debuginfo=1' || '' }}
+          CARGO_BUILD_RUSTFLAGS: ${{ matrix.settings.target == 'x86_64-pc-windows-msvc' && '-C opt-level=1 -C debuginfo=1' || '' }}
 
   tauri-plugins:
     name: Verify Tauri plugin versions

@@ -197,9 +197,15 @@ jobs:
           if [ "$RUNNER_OS" = "Windows" ]; then
             echo "RUST_TARGET_TRIPLE=${{ matrix.settings.target }}" >> $env:GITHUB_ENV
             echo "CARGO_BUILD_TARGET=${{ matrix.settings.target }}" >> $env:GITHUB_ENV
+            echo "CARGO_BUILD_JOBS=1" >> $env:GITHUB_ENV
+            echo "RUSTFLAGS=-C opt-level=2 -C debuginfo=0" >> $env:GITHUB_ENV
+            echo "CARGO_BUILD_RUSTFLAGS=-C opt-level=2 -C debuginfo=0" >> $env:GITHUB_ENV
           else
             export RUST_TARGET_TRIPLE=${{ matrix.settings.target }}
             export CARGO_BUILD_TARGET=${{ matrix.settings.target }}
+            export CARGO_BUILD_JOBS=4
+            export RUSTFLAGS="-C opt-level=2 -C debuginfo=0"
+            export CARGO_BUILD_RUSTFLAGS="-C opt-level=2 -C debuginfo=0"
           fi
           pnpm -w cap-setup
           pnpm build:tauri --target ${{ matrix.settings.target }} --config src-tauri/tauri.prod.conf.json
