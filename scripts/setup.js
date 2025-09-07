@@ -123,7 +123,14 @@ async function main() {
 
 		const ffmpegDir = path.join(targetDir, "ffmpeg");
 		if (!(await fileExists(ffmpegDir)) || downloadedFfmpeg) {
-			await execFile("tar", ["xf", ffmpegZipPath, "-C", targetDir]);
+			if (process.platform === "win32") {
+				await execFile("powershell.exe", [
+				  "-Command",
+				  `Expand-Archive -Path "${ffmpegZipPath}" -DestinationPath "${targetDir}" -Force`
+				]);
+			  } else {
+				await execFile("tar", ["xf", ffmpegZipPath, "-C", targetDir]);
+			  }
 			await fs.rm(ffmpegDir, { recursive: true, force: true }).catch(() => {});
 			await fs.rename(path.join(targetDir, FFMPEG_ZIP_NAME), ffmpegDir);
 			console.log("Extracted ffmpeg");
