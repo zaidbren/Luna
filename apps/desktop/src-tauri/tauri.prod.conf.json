@@ -4,7 +4,8 @@
 	"mainBinaryName": "Phia",
 	"identifier": "so.phia.desktop",
 	"build": {
-		"beforeBundleCommand": "node scripts/prodBeforeBundle.js"
+		"beforeBundleCommand": "node scripts/prodBeforeBundle.js",
+		"frontendDist": "../.output/public"
 	},
 	"plugins": {
 		"updater": {
